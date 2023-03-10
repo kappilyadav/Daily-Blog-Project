@@ -5,7 +5,7 @@ const bodyParser = require("body-parser");
 const ejs = require("ejs");
 const mongoose = require("mongoose");
 
-mongoose.connect("mongodb://127.0.0.1/blogDB");
+mongoose.connect("mongodb+srv://admin-prabhat:Yesushould1@cluster0.tehbjii.mongodb.net/blogDB");
 
 const postsSchema = {
   title: String,
