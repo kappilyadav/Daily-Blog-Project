@@ -70,6 +70,11 @@ app.get("/posts/:id/", function (req, res){
 })
 
 
+// app.get("/compose", function (req, res) {
+//   res.redirect("/compose");
+// })
+
+
 app.post("/compose", function (req, res) {
 
   const post = new Post({
