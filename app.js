@@ -4,12 +4,14 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const ejs = require("ejs");
 const mongoose = require("mongoose");
+const _ = require("lodash");
+const dotenv = require("dotenv").config();
 
 mongoose.connect(process.env.MONGOKEY + "/blogDB");
 
 const postsSchema = {
   title: String,
-  body: String
+  content: String
 }
 
 const Post = mongoose.model("Post", postsSchema);
@@ -54,13 +56,14 @@ app.get("/compose", function (req, res) {
 
 app.get("/posts/:id/", function (req, res){
 
-  const requestedId = req.params.id;
+  const str = _.lowerCase(req.params.id);
+  const requestedId = str.split(" ").join("");
 
   Post.findById(requestedId, function(err, post){
 
     if(!err){
       console.log(post);
-      res.render("post", {postTitle: post.title, postBody: post.body});
+      res.render("post", {postTitle: post.title, postBody: post.content});
     }
   })
     
@@ -71,7 +74,7 @@ app.post("/compose", function (req, res) {
 
   const post = new Post({
     title: req.body.postTitle,
-    body: req.body.postBody
+    content: req.body.postBody
   })
 
   post.save(function(err){
